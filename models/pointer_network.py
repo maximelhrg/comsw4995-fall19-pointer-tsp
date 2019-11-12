@@ -12,6 +12,9 @@ def to_var(x):
 
 
 class PointerNetwork(nn.Module):
+    """
+    Define the Pointer Network used to learn TSP from heatmap given by the ConvNet.
+    """
     def __init__(self, input_size, emb_size, weight_size, answer_seq_len, hidden_size=512, is_GRU=True):
         super(PointerNetwork, self).__init__()
 
