@@ -26,7 +26,7 @@ if __name__ == "__main__":
     with open(opts.filename, "w") as f:
         start_time = time.time()
         for nodes_coord in set_nodes_coord:
-            solver = TSPSolver.from_data(nodes_coord[:,0], nodes_coord[:,1], norm="GEO")  
+            solver = TSPSolver.from_data(nodes_coord[:,0], nodes_coord[:,1], norm="GE")  
             solution = solver.solve()
             f.write( " ".join( str(x)+str(" ")+str(y) for x,y in nodes_coord) )
             f.write( str(" ") + str('output') + str(" ") )

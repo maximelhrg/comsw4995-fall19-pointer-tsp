@@ -1,12 +1,12 @@
 {
-  "expt_name": "deafult",
+  "expt_name": "default",
   "gpu_id": "0",
 
-  "train_filepath": "./data/tsp10_train_concorde.txt",
-  "val_filepath": "./data/tsp10_val_concorde.txt",
-  "test_filepath": "./data/tsp10_test_concorde.txt",
+  "train_filepath": "./data/tsp20_train_concorde.txt",
+  "val_filepath": "./data/tsp20_val_concorde.txt",
+  "test_filepath": "./data/tsp20_test_concorde.txt",
 
-  "num_nodes": 10,
+  "num_nodes": 20,
   "num_neighbors": 5,
     
   "node_dim": 2,
