@@ -5,11 +5,6 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 
 
-def to_var(x):
-    if torch.cuda.is_available():
-        x = x.cuda()
-    return Variable(x)
-
 
 class PointerNetwork(nn.Module):
     """
@@ -46,8 +41,8 @@ class PointerNetwork(nn.Module):
         encoder_states = encoder_states.transpose(1, 0) # (L, bs, H)
 
         # Decoding states initialization
-        decoder_input = to_var(torch.zeros(batch_size, self.emb_size)) # (bs, embd_size)
-        hidden = to_var(torch.zeros([batch_size, self.hidden_size]))   # (bs, h)
+        decoder_input = Variable(torch.zeros(batch_size, self.emb_size)) # (bs, embd_size)
+        hidden = Variable(torch.zeros([batch_size, self.hidden_size]))   # (bs, h)
         cell_state = encoder_states[-1]                                # (bs, h)
 
         probs = []

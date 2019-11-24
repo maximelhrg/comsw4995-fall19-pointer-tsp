@@ -19,7 +19,7 @@ class GoogleTSPReader(object):
     Format expected as in Vinyals et al., 2015: https://arxiv.org/abs/1506.03134, http://goo.gl/NDcOIG
     """
 
-    def __init__(self, num_nodes, num_neighbors, batch_size, filepath):
+    def __init__(self, num_nodes, num_neighbors, batch_size, filepath, metric):
         """
         Args:
             num_nodes: Number of nodes in TSP tours
@@ -33,6 +33,7 @@ class GoogleTSPReader(object):
         self.filepath = filepath
         self.filedata = shuffle(open(filepath, "r").readlines())  # Always shuffle upon reading data
         self.max_iter = (len(self.filedata) // batch_size)
+        self.metric = metric
 
     def __iter__(self):
         for batch in range(self.max_iter):
@@ -64,7 +65,7 @@ class GoogleTSPReader(object):
                 nodes_coord.append([float(line[idx]), float(line[idx + 1])])
             
             # Compute distance matrix
-            W_val = squareform(pdist(nodes_coord, metric='euclidean'))
+            W_val = squareform(pdist(nodes_coord, metric=self.metric))
             
             # Compute adjacency matrix
             if self.num_neighbors == -1:

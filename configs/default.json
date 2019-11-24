@@ -31,5 +31,7 @@
   "accumulation_steps": 1,
 
   "learning_rate": 0.001,
-  "decay_rate": 1.01
+  "decay_rate": 1.01,
+
+  "metric": "chebyshev"
 }
