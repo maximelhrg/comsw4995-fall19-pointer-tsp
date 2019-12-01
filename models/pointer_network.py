@@ -5,22 +5,29 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 
 
+def to_var(x):
+    if torch.cuda.is_available():
+        x = x.cuda()
+    return Variable(x)
+
 
 class PointerNetwork(nn.Module):
     """
     Define the Pointer Network used to learn TSP from heatmap given by the ConvNet.
     """
-    def __init__(self, input_size, emb_size, weight_size, answer_seq_len, hidden_size=512, is_GRU=True):
+    def __init__(self, inp_size, weight_size, answer_seq_len, hidden_size=512, is_GRU=True):
         super(PointerNetwork, self).__init__()
 
+        input_size = inp_size[0]
+        emb_size = inp_size[1]
+        
         self.hidden_size = hidden_size
         self.input_size = input_size
+        self.emb_size = emb_size
         self.answer_seq_len = answer_seq_len
         self.weight_size = weight_size
-        self.emb_size = emb_size
         self.is_GRU = is_GRU
 
-        self.emb = nn.Embedding(input_size, emb_size)  # embed inputs
         if is_GRU:
             self.enc = nn.GRU(emb_size, hidden_size, batch_first=True)
             self.dec = nn.GRUCell(emb_size, hidden_size) # GRUCell's input is always batch first
@@ -32,17 +39,17 @@ class PointerNetwork(nn.Module):
         self.W2 = nn.Linear(hidden_size, weight_size, bias=False) # blending decoder
         self.vt = nn.Linear(weight_size, 1, bias=False) # scaling sum of enc and dec by v.T
 
+        
     def forward(self, input):
         batch_size = input.size(0)
-        input = self.emb(input) # (bs, L, embd_size)
 
         # Encoding
         encoder_states, hc = self.enc(input) # encoder_state: (bs, L, H)
         encoder_states = encoder_states.transpose(1, 0) # (L, bs, H)
 
         # Decoding states initialization
-        decoder_input = Variable(torch.zeros(batch_size, self.emb_size)) # (bs, embd_size)
-        hidden = Variable(torch.zeros([batch_size, self.hidden_size]))   # (bs, h)
+        decoder_input = to_var(torch.zeros(batch_size, self.emb_size)) # (bs, embd_size)
+        hidden = to_var(torch.zeros([batch_size, self.hidden_size]))   # (bs, h)
         cell_state = encoder_states[-1]                                # (bs, h)
 
         probs = []
