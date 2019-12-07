@@ -108,7 +108,7 @@ def plot_predictions(x_nodes_coord, x_edges, x_edges_values, y_edges, y_pred_edg
         W_val = x_edges_values[idx].cpu().numpy()
         W_target = y_edges[idx].cpu().numpy()
         W_sol_bins = y_bins[idx].cpu().numpy()
-        W_sol_probs = y_probs[idx].cpu().numpy()
+        W_sol_probs = y_probs[idx].detach().numpy()
         plt1 = f.add_subplot(121)
         plot_tsp(plt1, x_coord, W, W_val, W_target, 'Groundtruth: {:.3f}'.format(W_to_tour_len(W_target, W_val)))
         plt2 = f.add_subplot(122)

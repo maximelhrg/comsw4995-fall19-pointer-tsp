@@ -71,3 +71,25 @@ class PointerNetwork(nn.Module):
         probs = torch.stack(probs, dim=1)           # (bs, M, L)
 
         return probs
+    
+
+    
+## Trying with a simple dense network
+    
+class DenseNTM(nn.Module):
+    def __init__(self, inp_size):
+        super().__init__()
+        
+        self.inp_size = inp_size
+        self.size = inp_size[0] * inp_size[1]
+        self.fc1 = nn.Linear(self.size, self.size)
+        
+    def forward(self, x):
+
+        # x: (bs, L, M)
+        x = x.view(-1, self.size) # (bs, L*M)
+        x = F.tanh(self.fc1(x)) # (bs, L*M)
+        x = x.reshape(-1, self.inp_size[0], self.inp_size[1]) # (bs, L, M)
+        y = F.softmax(x) # (bs, L, M)
+        
+        return y
