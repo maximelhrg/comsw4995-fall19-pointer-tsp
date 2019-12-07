@@ -14,7 +14,7 @@ Usage
 Installation
 ------------
 
-The below step-by-step guide for local installation using a Terminal (Mac/Linux) or Git Bash (Windows) has been imported from 
+The below step-by-step guide for local installation using a Terminal (Mac/Linux) or Git Bash (Windows) has been imported from C. K. Joshi, T. Laurent, and X. Bresson work.
 
 .. code-block:: pyhon
 
