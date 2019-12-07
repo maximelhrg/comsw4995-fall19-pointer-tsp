@@ -5,6 +5,8 @@ This project introduces an approach for trying to solve the Traveling Salesman P
 
 Main parts of our code and notebooks have been taken and inspired from previous work from C. K. Joshi, T. Laurent, and X. Bresson, which could be found on the following repository https://github.com/chaitjo/graph-convnet-tsp#installation .
 
+Please refer to our final report ``final_report_project.pdf`` for further details on our work.
+
 
 Usage
 =====
